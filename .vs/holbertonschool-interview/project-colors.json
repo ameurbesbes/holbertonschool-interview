@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "a30f949f-bf7c-49b0-b391-79e779fba2a7": {
+      "ProjectGuid": "a30f949f-bf7c-49b0-b391-79e779fba2a7",
+      "DisplayName": "0x00-lockboxes",
+      "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 1
+}
