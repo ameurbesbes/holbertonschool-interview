@@ -1,20 +1,18 @@
 #!/usr/bin/python3
+"""
+Minimum operations
+"""
 
-""" Calculates the fewest number of operations needed to result in exactly n H characters. """
+
 def minOperations(n):
-    """ Calculates the fewest number of operations needed to result in exactly n H characters. """
-    copy = "H"
-    output = ""
-    i = 0
-    if (n < 2):
-        return 0
-    while (len(output) < n):
-        if (i % 2 == 0):
-            output += copy
+    x = 0
+    i = 2
+
+    while (i <= n):
+        if n % i == 0:
+            x = x + i
+            n = n / i
         else:
-            copy = output
-            output += copy
-        i += 1
-    if (i == n):
-        return i
-    return i + 1
+            i += 1
+
+    return x
