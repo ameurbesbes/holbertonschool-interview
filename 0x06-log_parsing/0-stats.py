@@ -1,47 +1,38 @@
 #!/usr/bin/python3
-""" script that reads stdin line by line and computes metrics """
+"""
+Script that reads stdin line by line and computes metrics
+"""
+import sys
 
-if __name__ == '__main__':
+total_size = 0
+counter = 0
 
-    import sys
+dict_codes_counter = {'200': 0, '301': 0, '400': 0, '401': 0,
+                      '403': 0, '404': 0, '405': 0, '500': 0}
 
-    def print_results(statusCodes, fileSize):
-        """ Print statistics """
-        print("File size: {:d}".format(fileSize))
-        for statusCode, times in sorted(statusCodes.items()):
-            if times:
-                print("{:s}: {:d}".format(statusCode, times))
+try:
+    for line in sys.stdin:
+        line_list = line.split(" ")
+        if len(line_list) > 2:
+            code = line_list[-2]
+            size = int(line_list[-1])
+            if code in dict_codes_counter.keys():
+                dict_codes_counter[code] += 1
+            total_size += size
+            counter += 1
 
-    statusCodes = {"200": 0,
-                   "301": 0,
-                   "400": 0,
-                   "401": 0,
-                   "403": 0,
-                   "404": 0,
-                   "405": 0,
-                   "500": 0
-                   }
-    fileSize = 0
-    n_lines = 0
+        if counter == 10:
+            print("File size: {:d}".format(total_size))
+            for k, v in sorted(dict_codes_counter.items()):
+                if v != 0:
+                    print("{}: {:d}".format(k, v))
+            counter = 0
 
-    try:
-        """ Read stdin line by line """
-        for line in sys.stdin:
-            if n_lines != 0 and n_lines % 10 == 0:
-                """ After every 10 lines, print from the beginning """
-                print_results(statusCodes, fileSize)
-            n_lines += 1
-            data = line.split()
-            try:
-                """ Compute metrics """
-                statusCode = data[-2]
-                if statusCode in statusCodes:
-                    statusCodes[statusCode] += 1
-                fileSize += int(data[-1])
-            except Exception:
-                pass
-        print_results(statusCodes, fileSize)
-    except KeyboardInterrupt:
-        """ Keyboard interruption, print from the beginning """
-        print_results(statusCodes, fileSize)
-        raise
+except Exception:
+    pass
+
+finally:
+    print("File size: {}".format(total_size))
+    for k, v in sorted(dict_codes_counter.items()):
+        if v != 0:
+            print("{}: {}".format(k, v))
