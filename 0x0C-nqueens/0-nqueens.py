@@ -12,7 +12,7 @@ N = sys.argv[1]
 try:
     N = int(N)
 
-except:
+except Exception:
     print("N must be a number")
     exit(1)
 
